@@ -36,7 +36,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 5. $ nano webpack.config.js
 
   ```javascript
-	// 這邊使用 HtmlWebpackPlugin，將 bundle 好的 <script> 插入到 body。${__dirname} 為 ES6 語法對應到 __dirname  
+	// 這邊使用 HtmlWebpackPlugin，將 bundle 好的 <script> 插入到 body。${__dirname} 為 ES6 語法對應到 __dirname
 	const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 	const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -44,7 +44,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 	  filename: 'index.html',
 	  inject: 'body',
 	});
-	
+
 	module.exports = {
 	  // 檔案起始點從 entry 進入，因為是陣列所以也可以是多個檔案
 	  entry: [
@@ -55,7 +55,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 	    path: `${__dirname}/dist`,
 	    filename: 'index_bundle.js',
 	  },
-	  module: 
+	  module:
 	  	// loaders 則是放欲使用的 loaders，在這邊是使用 babel-loader 將所有 .js（這邊用到正則式）相關檔案（排除了 npm 安裝的套件位置 node_modules）轉譯成瀏覽器可以閱讀的 JavaScript。preset 則是使用的 babel 轉譯規則，這邊使用 react、es2015。若是已經單獨使用 .babelrc 作為 presets 設定的話，則可以省略 query
 	    loaders: [
 	      {
@@ -80,7 +80,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 ` 在根目錄設定 .babelrc `
 6. $ nano .babelrc
 
-	```javascript 
+	```javascript
 	{
 	  "presets": [
 	    "es2015",
@@ -94,7 +94,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 `建立 app folder`
 8. $ mkdir app
 `建立 index.html & index.js`
-  ```html 
+  ```html
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -111,7 +111,7 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 
 	`index.js`
 
-	```js 
+	```js
 	import React from 'react';
 	import ReactDOM from 'react-dom';
 
@@ -137,3 +137,5 @@ node相關安裝設定參考 [http://mac-osx-for-newbie-book.kejyun.com/software
 
 
 > 以上為第一次操作練習，部分指令內容來源為 [reactjs101-CH02](https://github.com/kdchang/reactjs101/blob/master/Ch02/webpack-dev-enviroment.md)
+
+> 參考文件 [猴子也能看懂的 React 教學](https://j6qup3.github.io/2016/08/06/%E7%8C%B4%E5%AD%90%E4%B9%9F%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84-React-%E6%95%99%E5%AD%B8-1/)
