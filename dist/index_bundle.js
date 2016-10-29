@@ -71,37 +71,80 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
+	var TodoList = function TodoList(props) {
+	  return _react2.default.createElement(
+	    'ul',
+	    null,
+	    props.items.map(function (item) {
+	      return _react2.default.createElement(
+	        'li',
+	        { key: item.id },
+	        item.text
+	      );
+	    })
+	  );
+	};
 
-	  function App(props) {
-	    _classCallCheck(this, App);
+	var TodoApp = function (_React$Component) {
+	  _inherits(TodoApp, _React$Component);
 
-	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	  function TodoApp(props) {
+	    _classCallCheck(this, TodoApp);
 
-	    _this.state = {};
+	    var _this = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
+
+	    _this.onChange = _this.onChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.state = {
+	      items: [],
+	      text: ''
+	    };
 	    return _this;
 	  }
 
-	  _createClass(App, [{
+	  _createClass(TodoApp, [{
+	    key: 'onChange',
+	    value: function onChange(e) {
+	      this.setState({ text: e.target.value });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var nextItems = this.state.items.concat([{ text: this.state.text, id: Date.now() }]);
+	      var nextText = '';
+	      this.setState({ items: nextItems, text: nextText });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h1',
+	          'h3',
 	          null,
-	          'Hello, World!'
+	          'ToDo'
+	        ),
+	        _react2.default.createElement(TodoList, { items: this.state.items }),
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit },
+	          _react2.default.createElement('input', { onChange: this.onChange, value: this.state.text }),
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Add #' + (this.state.items.length + 1)
+	          )
 	        )
 	      );
 	    }
 	  }]);
 
-	  return App;
+	  return TodoApp;
 	}(_react2.default.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(TodoApp, null), document.getElementById('app'));
 
 /***/ },
 /* 2 */
