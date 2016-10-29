@@ -1,51 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const TodoList = (props) => (
-  <ul>
-    {
-      props.items.map((item) => (
-        <li key={item.id}>{item.text}</li>
-      ))
-    }
-  </ul>
-)
-
-class TodoApp extends React.Component {
+class MarkdownEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.rawMarkup = this.rawMarkup.bind(this);
     this.state = {
-      items: [],
-      text: '',
+      value: 'Type some word.',
     }
   }
 
-  onChange(e){
-    this.setState({text: e.target.value})
+  handleChange(e) {
+    // e.target.value
+    this.setState({value: this.refs.textarea_ref.value});
   }
 
-  handleSubmit(e){
-    e.preventDefault();
-    const nextItems = this.state.items.concat([{text: this.state.text, id: Date.now()}]);
-    const nextText = '';
-    this.setState({items: nextItems, text: nextText});
+  rawMarkup(e) {
+    const md = new Remarkable();
+    return {__html: md.render(this.state.value)};
   }
 
-  render(){
+  render() {
     return (
-      <div>
-        <h3>ToDo</h3>
-        <TodoList items={this.state.items}/>
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.text} />
-          <button>{ 'Add #' + (this.state.items.length + 1)}</button>
-        </form>
+      <div className="MarkdownEditor">
+        <h3>Input</h3>
+        <textarea
+          onChange={this.handleChange}
+          ref="textarea_ref"
+          defaultValue={this.state.value}
+          placeholder="Type here plz!"
+        >
+        </textarea>
+        <h3>Output</h3>
+        <div className="content" dangerouslySetInnerHTML={this.rawMarkup()}></div>
       </div>
     )
   }
 
 }
 
-ReactDOM.render(<TodoApp />, document.getElementById('app'));
+ReactDOM.render(<MarkdownEditor />, document.getElementById('app'));
